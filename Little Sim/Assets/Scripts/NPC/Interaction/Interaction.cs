@@ -9,6 +9,12 @@ public class Interaction : MonoBehaviour
     [SerializeField] GameObject canvasCamera;
     private bool onTrigger;
     private PlayerMovement playerScript;
+    private InteractionMenu interactionMenuScript;
+
+    private void Start()
+    {
+        interactionMenuScript = interactionMenu.GetComponent<InteractionMenu>();
+    }
 
     private void Update()
     {
@@ -24,6 +30,12 @@ public class Interaction : MonoBehaviour
 
     private void SetMenuActive(bool onMenu)
     {
+
+        if (onMenu)
+            interactionMenuScript.SaveClothes();
+        else if(interactionMenuScript.isBuyingSomething)
+            interactionMenuScript.RestoreClothes();
+
         playerScript.isOnMenu = !playerScript.isOnMenu;
         interactionMenu.SetActive(onMenu);
         canvasCamera.SetActive(onMenu);
