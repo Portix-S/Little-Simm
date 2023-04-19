@@ -42,6 +42,16 @@ public class PlayerMovement : MonoBehaviour
         if (Input.GetKey(KeyCode.A))
             movementX = -1f;
 
+        if (Input.GetKeyDown(KeyCode.LeftShift))
+        {
+            moveSpeed *= 2f;
+            animator.SetBool("isRunning", true);
+        }
+        if (Input.GetKeyUp(KeyCode.LeftShift))
+        {
+            moveSpeed /= 2f;
+            animator.SetBool("isRunning", false);
+        }
         moveDirection = new Vector3(movementX, movementY).normalized;
 
         // Animations
