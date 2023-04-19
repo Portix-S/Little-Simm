@@ -5,28 +5,43 @@ using TMPro;
 
 public class InteractionMenu : MonoBehaviour
 {
-    [Header("Serializables")]
+    [Header("Menus")]
     [SerializeField] GameObject faceMenu;
     [SerializeField] GameObject hoodMenu;
+    [SerializeField] GameObject torsoMenu;
+    [SerializeField] GameObject pelveMenu;
+    [SerializeField] GameObject weaponMenu;
+
+    [Header("Renderers")]
     [SerializeField] SpriteRenderer faceRenderer;
     [SerializeField] SpriteRenderer hoodRenderer;
+    [SerializeField] SpriteRenderer torsoRenderer;
+    [SerializeField] SpriteRenderer pelveRenderer;
+    [SerializeField] SpriteRenderer weaponRenderer;
+    [SerializeField] SpriteRenderer weaponRenderer2;
+
+    [Header("Texts")]
     [SerializeField] TextMeshProUGUI priceText;
     
     private GameObject currentMenu;
     private Sprite enterFace;
     private Sprite enterHood;
+    private Sprite enterTorso;
+    private Sprite enterPelve;
+    private Sprite enterWeapon;
     private bool isBuyingFace;
     private bool isBuyingHood;
+    private bool isBuyingTorso;
+    private bool isBuyingPelve;
+    private bool isBuyingWeapon;
     private bool payed;
     private int totalPrice;
 
-
+    [Header("Publics")]
     public bool isBuyingSomething;
 
     public Sprite currentSprite;
 
-    //List<GameObject> currentOptions;
-    //[SerializeField] Sprite[] currentOptions;
 
     private void Start()
     {
@@ -39,16 +54,18 @@ public class InteractionMenu : MonoBehaviour
         priceText.text = "Buy   " + totalPrice;
 
         // Check if is trying the same item as they entered with
+        /*
         if(faceRenderer.sprite == enterFace && isBuyingFace)
         {
             isBuyingFace = false;
             totalPrice -= 10;
         }
+        //*/
 
         // Checks if is buying some item 
-        if (isBuyingFace || isBuyingHood)
+        if (isBuyingFace || isBuyingHood || isBuyingTorso || isBuyingPelve || isBuyingWeapon)
             isBuyingSomething = true;
-        else if ((!isBuyingFace && !isBuyingHood) || payed)
+        else if ((!isBuyingFace && !isBuyingHood && !isBuyingTorso && !isBuyingPelve && !isBuyingWeapon) || payed) // Can I remove the first part?
             isBuyingSomething = false;
         
     }
@@ -61,27 +78,9 @@ public class InteractionMenu : MonoBehaviour
 
     public void ChangeFace()
     {
-        if (faceRenderer.sprite != currentSprite)
-        {
-            faceRenderer.sprite = currentSprite;
-            if(!isBuyingFace)
-            {
-                isBuyingFace = true;
-                totalPrice += 10;
-            }
-        }
-        /*
-        else if(faceRenderer.sprite == enterFace)
-        {
-            if(isBuyingFace)
-            {
-                isBuyingFace = false;
-                totalPrice -= 10;
-            }
-        }
-        //*/
+        HandleSelectedItem(ref faceRenderer, ref isBuyingFace, enterFace);
     }
-    
+
     public void OpenHoodMenu()
     {
         if(currentMenu != hoodMenu)
@@ -90,9 +89,58 @@ public class InteractionMenu : MonoBehaviour
 
     public void ChangeHood()
     {
-        if (hoodRenderer.sprite != currentSprite)
+        HandleSelectedItem(ref hoodRenderer, ref isBuyingHood, enterHood);
+    }
+
+    public void OpenTorsoMenu()
+    {
+        if (currentMenu != torsoMenu)
+            ChangeMenu(torsoMenu);
+    }
+
+    public void ChangeTorso()
+    {
+        HandleSelectedItem(ref torsoRenderer, ref isBuyingTorso, enterTorso);
+    }
+
+    public void OpenPelveMenu()
+    {
+        if (currentMenu != pelveMenu)
+            ChangeMenu(pelveMenu);
+    }
+
+    public void ChangePelve()
+    {
+        HandleSelectedItem(ref pelveRenderer, ref isBuyingPelve, enterPelve);
+    }
+    public void OpenWeaponMenu()
+    {
+        if (currentMenu != weaponMenu)
+            ChangeMenu(weaponMenu);
+    }
+
+    public void ChangeWeapon()
+    {
+        HandleSelectedItem(ref weaponRenderer, ref isBuyingWeapon, enterWeapon);
+        HandleSelectedItem(ref weaponRenderer2, ref isBuyingWeapon, enterWeapon);
+    }
+
+
+    private void HandleSelectedItem(ref SpriteRenderer renderer, ref bool isBuyingItem, Sprite enterSprite)
+    {
+        if(renderer.sprite != currentSprite)
         {
-            hoodRenderer.sprite = currentSprite;
+            renderer.sprite = currentSprite;
+            if(!isBuyingItem)
+            {
+                isBuyingItem = true;
+                totalPrice += 10;
+            }
+        }
+        if(renderer.sprite == enterSprite && isBuyingItem)
+        {
+            isBuyingItem = false;
+            totalPrice -= 10;
         }
     }
 
@@ -100,8 +148,6 @@ public class InteractionMenu : MonoBehaviour
     {
         currentMenu.SetActive(false);
         currentMenu = newMenu;
-        //currentOptions = new List<GameObject>();
-        //currentOptions = currentMenu.GetComponentsInChildren<Sprite>();
         currentMenu.SetActive(true);
     }
 
@@ -111,8 +157,19 @@ public class InteractionMenu : MonoBehaviour
         {
             SaveClothes();
             payed = true;
+            ResetShop();
             priceText.text = "Buy   " + totalPrice;
         }
+    }
+
+    private void ResetShop()
+    {
+        totalPrice = 0;
+        isBuyingFace = false;
+        isBuyingHood = false;
+        isBuyingTorso = false;
+        isBuyingPelve = false;
+        isBuyingWeapon = false;
     }
 
     public void SaveClothes()
@@ -120,11 +177,18 @@ public class InteractionMenu : MonoBehaviour
         payed = false;
         enterFace = faceRenderer.sprite;
         enterHood = hoodRenderer.sprite;
+        enterTorso = torsoRenderer.sprite;
+        enterPelve = pelveRenderer.sprite;
+        enterWeapon = weaponRenderer.sprite;
     }
 
     public void RestoreClothes()
     {
         faceRenderer.sprite = enterFace;
         hoodRenderer.sprite = enterHood;
+        torsoRenderer.sprite = enterTorso;
+        pelveRenderer.sprite = enterPelve;
+        weaponRenderer.sprite = enterWeapon;
+        ResetShop();
     }
 }

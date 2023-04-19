@@ -9,7 +9,8 @@ public class SpriteChanger : MonoBehaviour
     InteractionMenu menuScript;
     private void Start()
     {
-        sprite = ((Image)GetComponent<Button>().targetGraphic).sprite;
+        if(gameObject.tag != "Weapon")
+            sprite = ((Image)GetComponent<Button>().targetGraphic).sprite;
         menuScript = GameObject.FindGameObjectWithTag("Menu").GetComponent<InteractionMenu>();
     }
 

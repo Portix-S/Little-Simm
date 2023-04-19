@@ -72,6 +72,7 @@ public class PlayerMovement : MonoBehaviour
     private void FixedUpdate()
     {
         // Adds velocity to rigidbody decide how to move
-        rb.velocity = moveDirection * moveSpeed;
+        if(!isOnMenu)
+            rb.velocity = moveDirection * moveSpeed;
     }
 }
