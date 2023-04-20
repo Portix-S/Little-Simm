@@ -7,18 +7,16 @@ public class PauseMenu : MonoBehaviour
     [SerializeField] GameObject pauseMenu;
     public bool isPaused;
 
-    private PlayerMovement playerMov;
+    [SerializeField] private PlayerMovement playerMov;
+    private GameObject player;
 
-    private void Start()
-    {
-        playerMov = GameObject.FindGameObjectWithTag("Player").GetComponent<PlayerMovement>();
-    }
+
     private void Update()
     {
         if (!isPaused && Input.GetKeyDown(KeyCode.Escape))
         {
             isPaused = true;
-            playerMov.isOnPauseMenu = true;
+            playerMov.PauseMenu(true);
             pauseMenu.SetActive(true);
         }
         else if (isPaused && Input.GetKeyDown(KeyCode.Escape))
@@ -34,7 +32,7 @@ public class PauseMenu : MonoBehaviour
     public void ReturnToGame()
     {
         isPaused = false;
-        playerMov.isOnPauseMenu = false;
+        playerMov.PauseMenu(false);
         pauseMenu.SetActive(false);
     }
 }

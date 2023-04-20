@@ -16,10 +16,9 @@ public class PlayerStats : MonoBehaviour
     {
         if (money - amount >= 0)
         {
-            Debug.Log("paying");
             money -= amount;
-            playerMoney.text = money.ToString();
-            playerMoneyUI.text = money.ToString();
+            playerMoney.text = ""+money;
+            playerMoneyUI.text = ""+money;
             return true;
         }
         else

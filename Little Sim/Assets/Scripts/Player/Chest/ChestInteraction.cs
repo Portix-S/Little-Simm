@@ -56,7 +56,11 @@ public class ChestInteraction : MonoBehaviour
             {
                 isOpen = true;
                 gameObject.GetComponent<SpriteRenderer>().sprite = openedChest;
-                GameObject.FindGameObjectWithTag("Player").GetComponent<PlayerStats>().Pay(-5);
+                //Change
+                GameObject player = GameObject.FindGameObjectWithTag("Player");
+                PlayerStats playerScript = player.GetComponent<PlayerStats>();
+                playerScript.Pay(-5);
+                //GameObject.FindGameObjectWithTag("Player").GetComponent<PlayerStats>().Pay(-5);
                 chestHint.text = " ";
             }
         }

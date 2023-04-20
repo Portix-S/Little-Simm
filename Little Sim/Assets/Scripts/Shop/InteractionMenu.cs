@@ -148,7 +148,10 @@ public class InteractionMenu : MonoBehaviour
 
     public void BuyClothes()
     {
-        if (GameObject.FindGameObjectWithTag("Player").GetComponent<PlayerStats>().Pay(totalPrice))
+        // Change
+        GameObject player = GameObject.FindGameObjectWithTag("Player");
+        PlayerStats playerScript = player.GetComponent<PlayerStats>();
+        if (playerScript.Pay(totalPrice))
         {
             SaveClothes();
             payed = true;

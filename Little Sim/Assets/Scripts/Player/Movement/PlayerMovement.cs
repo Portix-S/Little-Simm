@@ -14,13 +14,19 @@ public class PlayerMovement : MonoBehaviour
     [SerializeField] float movementY;
     private bool isFacingLeft;
     public bool isOnMenu;
-    public bool isOnPauseMenu;
+    private bool isOnPauseMenu;
     // Start is called before the first frame update
     private void Start()
     {
         rb = GetComponent<Rigidbody2D>();
         animator = GetComponent<Animator>();
     }
+    
+    public void PauseMenu(bool onPauseMenu)
+    {
+        isOnPauseMenu = onPauseMenu;
+    }
+
 
     // Update is called once per frame
     private void Update()
