@@ -31,45 +31,50 @@ public class PlayerMovement : MonoBehaviour
         //*/
 
         // Player Movement
-        movementX = 0f;
-        movementY = 0f;
-        if (Input.GetKey(KeyCode.W))
-            movementY = 1f;
-        if (Input.GetKey(KeyCode.S))
-            movementY = -1f;
-        if (Input.GetKey(KeyCode.D))
-            movementX = 1f;
-        if (Input.GetKey(KeyCode.A))
-            movementX = -1f;
+        if (!isOnMenu)
+        {
+            movementX = 0f;
+            movementY = 0f;
+            if (Input.GetKey(KeyCode.W))
+                movementY = 1f;
+            if (Input.GetKey(KeyCode.S))
+                movementY = -1f;
+            if (Input.GetKey(KeyCode.D))
+                movementX = 1f;
+            if (Input.GetKey(KeyCode.A))
+                movementX = -1f;
 
-        if (Input.GetKeyDown(KeyCode.LeftShift))
-        {
-            moveSpeed *= 2f;
-            animator.SetBool("isRunning", true);
-        }
-        if (Input.GetKeyUp(KeyCode.LeftShift))
-        {
-            moveSpeed /= 2f;
-            animator.SetBool("isRunning", false);
-        }
-        moveDirection = new Vector3(movementX, movementY).normalized;
+            // Running Logic
+            if (Input.GetKeyDown(KeyCode.LeftShift))
+            {
+                moveSpeed *= 2f;
+                animator.SetBool("isRunning", true);
+            }
+            if (Input.GetKeyUp(KeyCode.LeftShift))
+            {
+                moveSpeed /= 2f;
+                animator.SetBool("isRunning", false);
+            }
 
-        // Animations
-        if(movementX != 0f || movementY != 0f)
-            animator.SetBool("isWalking", true);
-        else
-            animator.SetBool("isWalking", false);
+            moveDirection = new Vector3(movementX, movementY).normalized;
 
-        // Handling if needs to rotate player left/right
-        if (movementX < 0f && !isFacingLeft)
-        {
-            isFacingLeft = true;
-            FlipPlayer();
-        }
-        else if(movementX > 0f && isFacingLeft)
-        {
-            isFacingLeft = false;
-            FlipPlayer();
+            // Animations
+            if (movementX != 0f || movementY != 0f)
+                animator.SetBool("isWalking", true);
+            else
+                animator.SetBool("isWalking", false);
+
+            // Handling if needs to rotate player left/right
+            if (movementX < 0f && !isFacingLeft)
+            {
+                isFacingLeft = true;
+                FlipPlayer();
+            }
+            else if (movementX > 0f && isFacingLeft)
+            {
+                isFacingLeft = false;
+                FlipPlayer();
+            }
         }
     }
 

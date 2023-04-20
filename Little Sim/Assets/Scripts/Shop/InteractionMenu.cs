@@ -39,28 +39,18 @@ public class InteractionMenu : MonoBehaviour
 
     [Header("Publics")]
     public bool isBuyingSomething;
-
     public Sprite currentSprite;
 
 
     private void Start()
     {
         currentMenu = faceMenu;
-        //ChangeMenu(faceMenu);
     }
+
     private void Update()
     {
         // Changes price
         priceText.text = "Buy   " + totalPrice;
-
-        // Check if is trying the same item as they entered with
-        /*
-        if(faceRenderer.sprite == enterFace && isBuyingFace)
-        {
-            isBuyingFace = false;
-            totalPrice -= 10;
-        }
-        //*/
 
         // Checks if is buying some item 
         if (isBuyingFace || isBuyingHood || isBuyingTorso || isBuyingPelve || isBuyingWeapon)
@@ -70,6 +60,7 @@ public class InteractionMenu : MonoBehaviour
         
     }
 
+    // -------------- This section Handle Shop Menus, Items and Customization -----------
     public void OpenFaceMenu()
     {
         if(currentMenu != faceMenu)
@@ -144,12 +135,16 @@ public class InteractionMenu : MonoBehaviour
         }
     }
 
+
     private void ChangeMenu(GameObject newMenu)
     {
         currentMenu.SetActive(false);
         currentMenu = newMenu;
         currentMenu.SetActive(true);
     }
+
+    // ----- End of the section that Handles Shop Menus, Items and Customization -----
+
 
     public void BuyClothes()
     {

@@ -30,18 +30,21 @@ public class Interaction : MonoBehaviour
 
     private void SetMenuActive(bool onMenu)
     {
-
+        // Checks if player entered the shop, so it saves current clothes
+        //or if player tries to leave while buying something, so it restores
+        //to initial clothes
         if (onMenu)
             interactionMenuScript.SaveClothes();
         else if(interactionMenuScript.isBuyingSomething)
             interactionMenuScript.RestoreClothes();
 
+        // Make menu active/deactive
         playerScript.isOnMenu = !playerScript.isOnMenu;
         interactionMenu.SetActive(onMenu);
         canvasCamera.SetActive(onMenu);
     }
 
-    private void OnTriggerEnter2D(Collider2D collision)
+    private void OnTriggerEnter2D(Collider2D collision) // Trigger to Open Shop
     {
         if (collision.tag == "Player")
         {
@@ -51,7 +54,7 @@ public class Interaction : MonoBehaviour
         }
     }
 
-    private void OnTriggerExit2D(Collider2D collision)
+    private void OnTriggerExit2D(Collider2D collision) // Trigger to Exit Shop
     {
         if (collision.tag == "Player")
         {
@@ -60,8 +63,4 @@ public class Interaction : MonoBehaviour
         }
     }
 
-    private void OnTriggerStay2D(Collider2D collision)
-    {
-        
-    }
 }

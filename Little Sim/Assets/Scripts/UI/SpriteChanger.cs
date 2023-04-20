@@ -5,6 +5,8 @@ using UnityEngine.UI;
 
 public class SpriteChanger : MonoBehaviour
 {
+    // This Script get the sprites that will be changed on the character
+
     [SerializeField] Sprite sprite;
     InteractionMenu menuScript;
     private void Start()
