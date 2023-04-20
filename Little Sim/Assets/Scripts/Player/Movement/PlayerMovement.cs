@@ -14,6 +14,7 @@ public class PlayerMovement : MonoBehaviour
     [SerializeField] float movementY;
     private bool isFacingLeft;
     public bool isOnMenu;
+    public bool isOnPauseMenu;
     // Start is called before the first frame update
     private void Start()
     {
@@ -31,7 +32,7 @@ public class PlayerMovement : MonoBehaviour
         //*/
 
         // Player Movement
-        if (!isOnMenu)
+        if (!isOnMenu && !isOnPauseMenu)
         {
             movementX = 0f;
             movementY = 0f;

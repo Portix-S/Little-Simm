@@ -11,6 +11,7 @@ public class Interaction : MonoBehaviour
     private PlayerMovement playerScript;
     private InteractionMenu interactionMenuScript;
 
+
     private void Start()
     {
         interactionMenuScript = interactionMenu.GetComponent<InteractionMenu>();
